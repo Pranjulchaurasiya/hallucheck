@@ -4,3 +4,6 @@ __pycache__/
 hallucheck/__pycache__/
 graphify-out/
 agent-harness/
+
+findings.json
+report.md
