@@ -1,0 +1,12 @@
+{
+  "investigation_name": "AI Code Assistant Competitor Pricing & Packaging",
+  "context": "how AI code assistant platforms structure their developer pricing, usage quotas, and enterprise packaging",
+  "synthesis_context": "competitor pricing models, tier limits, and enterprise features",
+  "targets": [
+    {"name": "Cursor", "focus": "pricing_and_plans"},
+    {"name": "GitHub Copilot", "focus": "pricing_and_plans"},
+    {"name": "Codeium", "focus": "pricing_and_plans"},
+    {"name": "Tabnine", "focus": "pricing_and_plans"},
+    {"name": "Augment", "focus": "pricing_and_plans"}
+  ]
+}

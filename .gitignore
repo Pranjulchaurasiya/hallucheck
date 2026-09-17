@@ -1,0 +1,6 @@
+﻿.env
+__pycache__/
+*.pyc
+hallucheck/__pycache__/
+graphify-out/
+agent-harness/.env

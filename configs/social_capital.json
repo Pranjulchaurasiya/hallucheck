@@ -1,0 +1,17 @@
+{
+  "investigation_name": "Social Capital Inc. — Launch-Pattern Investigation",
+  "agency": "Social Capital Inc.",
+  "context": "how a stealth marketing/distribution\nagency executes product launches on X and LinkedIn",
+  "synthesis_context": "product launches run\nby the same distribution agency",
+  "targets": [
+    {"name": "PlayerZero", "launch_month": "2026-03"},
+    {"name": "Wispr Flow", "launch_month": "2026-02"},
+    {"name": "Poly AI", "launch_month": "2026-02"},
+    {"name": "Airwallex", "launch_month": "2025-12"},
+    {"name": "Gamma", "launch_month": "2025-11"},
+    {"name": "Cartesia", "launch_month": "2025-10"},
+    {"name": "Deel", "launch_month": "2025-10"},
+    {"name": "Superblocks", "launch_month": "2025-05"},
+    {"name": "Icon", "launch_month": "2025-02"}
+  ]
+}

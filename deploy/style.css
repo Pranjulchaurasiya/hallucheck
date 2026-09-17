@@ -1,0 +1,645 @@
+/* Paper / Audit-Ledger Design System for Hallucheck Investigation Dossier */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg-desk: #ECE9DF;
+  --bg-paper: #F7F5EE;
+  --ink-primary: #1C1B17;
+  --ink-muted: #6B6656;
+  --ink-faint: #9E9885;
+  --stamp-verified: #2F5D3A;
+  --stamp-unverified: #8B2E22;
+  --rule-hairline: #C9C2AC;
+  
+  --font-serif: "IBM Plex Serif", Georgia, Cambria, serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important; /* Zero border-radius anywhere */
+}
+
+body {
+  background-color: var(--bg-desk);
+  color: var(--ink-primary);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+  padding: 32px 16px 80px 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Outer Document Dossier Container */
+.dossier-sheet {
+  max-width: 680px;
+  margin: 0 0 0 32px; /* Single narrow column, left-aligned */
+  background-color: var(--bg-paper);
+  border-left: 1px solid var(--rule-hairline);
+  border-right: 1px solid var(--rule-hairline);
+  border-bottom: 1px solid var(--rule-hairline);
+  padding: 0 36px 48px 36px;
+  box-shadow: none; /* No card shadows */
+  position: relative;
+}
+
+@media (max-width: 760px) {
+  .dossier-sheet {
+    margin: 0 auto;
+    padding: 0 20px 36px 20px;
+  }
+}
+
+/* Demo Mode Banner (Above torn receipt edge) */
+.demo-banner {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--stamp-unverified);
+  text-align: center;
+  padding: 8px 12px;
+  background-color: rgba(139, 46, 34, 0.05);
+  border: 1px dashed var(--stamp-unverified);
+  margin-top: 18px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* Perforated / Torn Top Edge of Receipt Roll */
+.tear-strip {
+  width: 100%;
+  height: 12px;
+  margin-left: -36px;
+  padding-right: 72px;
+  box-sizing: content-box;
+  background-color: var(--bg-desk);
+  /* Repeating tooth cut marks simulating torn roll */
+  background-image: 
+    linear-gradient(135deg, var(--bg-paper) 6px, transparent 6px),
+    linear-gradient(-135deg, var(--bg-paper) 6px, transparent 6px);
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  background-size: 12px 12px;
+  border-bottom: 1px dashed var(--rule-hairline);
+  margin-bottom: 28px;
+}
+
+@media (max-width: 760px) {
+  .tear-strip {
+    margin-left: -20px;
+    padding-right: 40px;
+  }
+}
+
+/* Document Title Block */
+.doc-header {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule-hairline);
+  margin-bottom: 28px;
+}
+
+.doc-meta-top {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.doc-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink-primary);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.doc-subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.action-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.action-link:hover {
+  color: var(--stamp-verified);
+}
+
+.action-button {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-primary);
+  background: transparent;
+  border: 1px solid var(--ink-primary);
+  padding: 4px 10px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.15s ease;
+}
+
+.action-button:hover {
+  background: var(--ink-primary);
+  color: var(--bg-paper);
+}
+
+.action-static-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule-hairline);
+  padding: 4px 10px;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.02);
+  letter-spacing: 0.01em;
+}
+
+/* Sections */
+.dossier-section {
+  margin-bottom: 36px;
+}
+
+.section-header {
+  border-bottom: 1px solid var(--rule-hairline);
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink-primary);
+  letter-spacing: -0.01em;
+}
+
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+/* 1. Executive Synthesis (Prose Finding) */
+.synthesis-prose {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-primary);
+}
+
+.synthesis-prose p {
+  margin-bottom: 14px;
+}
+
+.synthesis-prose h3 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 20px 0 8px 0;
+  color: var(--ink-primary);
+}
+
+.synthesis-prose ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.synthesis-prose li {
+  margin-bottom: 8px;
+}
+
+.synthesis-prose .mono-entity {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  background: rgba(201, 194, 172, 0.25);
+  padding: 1px 4px;
+  border-bottom: 1px dotted var(--ink-muted);
+}
+
+.synthesis-prose a,
+.trace-summary a {
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.synthesis-prose ol,
+.trace-summary ol {
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+
+.trace-summary ul {
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+
+.trace-summary li {
+  margin-bottom: 6px;
+}
+
+.trace-summary p {
+  margin-bottom: 12px;
+}
+
+.trace-summary h3 {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 16px 0 8px 0;
+  color: var(--ink-primary);
+}
+
+.trace-summary .mono-entity {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  background: rgba(201, 194, 172, 0.25);
+  padding: 1px 4px;
+  border-bottom: 1px dotted var(--ink-muted);
+}
+
+/* Audit Tables (Ledger Paper Style) */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-primary);
+  border: 1px solid var(--rule-line);
+  background-color: var(--bg-paper);
+}
+
+.audit-table th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-secondary);
+  background-color: rgba(201, 194, 172, 0.25);
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-line);
+  border-right: 1px solid var(--rule-hairline);
+  white-space: nowrap;
+}
+
+.audit-table th:last-child {
+  border-right: none;
+}
+
+.audit-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-hairline);
+  border-right: 1px solid var(--rule-hairline);
+  vertical-align: top;
+}
+
+.audit-table td:last-child {
+  border-right: none;
+}
+
+.audit-table tr:last-child td {
+  border-bottom: none;
+}
+
+.audit-table tr:hover {
+  background-color: rgba(201, 194, 172, 0.08);
+}
+
+.audit-table .mono-entity {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: rgba(201, 194, 172, 0.25);
+  padding: 1px 4px;
+  border-bottom: 1px dotted var(--ink-muted);
+}
+
+.audit-divider {
+  border: none;
+  border-top: 1px dashed var(--rule-line);
+  margin: 20px 0;
+}
+
+/* 2. Grounding Audit Ledger (Receipt Style - The Centerpiece) */
+.ledger-receipt {
+  border-top: 1px solid var(--rule-hairline);
+  padding-top: 14px;
+}
+
+.receipt-entry {
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(201, 194, 172, 0.4);
+}
+
+.receipt-entry:last-child {
+  border-bottom: none;
+}
+
+.receipt-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.receipt-claim {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;
+  flex-shrink: 0;
+}
+
+.receipt-dots {
+  flex-grow: 1;
+  flex-shrink: 1;
+  border-bottom: 1px dotted var(--rule-hairline);
+  margin: 0 10px;
+  min-width: 16px;
+  height: 1px;
+}
+
+.receipt-status {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 85px;
+}
+
+/* Rubber Stamp Graphic */
+.stamp {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  display: inline-block;
+  line-height: 1.15;
+  user-select: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  margin: 0;
+  transform-origin: center center;
+}
+
+.stamp-verified {
+  color: var(--stamp-verified);
+  border: 1.5px solid var(--stamp-verified);
+  outline: 1px dashed rgba(47, 93, 58, 0.35);
+  outline-offset: 1px;
+}
+
+.stamp-unverified {
+  color: var(--stamp-unverified);
+  border: 1.5px solid var(--stamp-unverified);
+  outline: 1px dashed rgba(139, 46, 34, 0.35);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp {
+    transform: none !important;
+  }
+}
+
+.receipt-detail {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.45;
+  margin-top: 3px;
+  padding-left: 2px;
+}
+
+/* Running Total (Receipt Total Convention) */
+.receipt-totals {
+  margin-top: 20px;
+  padding: 14px 0 10px 0;
+  border-top: 1px solid var(--rule-hairline);
+  border-bottom: 3px double var(--rule-hairline);
+  font-family: var(--font-mono);
+  text-align: right;
+}
+
+.receipt-total-line {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-primary);
+  line-height: 1.6;
+}
+
+.receipt-total-sub {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+/* 3. Client Fleet Execution Manifest (Itemized Monospace List) */
+.manifest-list {
+  border-top: 1px solid var(--rule-hairline);
+}
+
+.manifest-item {
+  border-bottom: 1px solid var(--rule-hairline);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.manifest-item:hover {
+  background-color: rgba(201, 194, 172, 0.15);
+}
+
+.manifest-row {
+  display: grid;
+  grid-template-columns: 140px 80px 75px 85px 1fr 20px;
+  align-items: center;
+  padding: 10px 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-primary);
+}
+
+@media (max-width: 600px) {
+  .manifest-row {
+    grid-template-columns: 1fr 70px 75px 20px;
+  }
+  .manifest-col-turns, .manifest-col-queries {
+    display: none;
+  }
+}
+
+.manifest-col-name {
+  font-weight: 600;
+}
+
+.manifest-col-date {
+  color: var(--ink-muted);
+}
+
+.manifest-col-turns, .manifest-col-queries {
+  color: var(--ink-muted);
+}
+
+.manifest-col-status {
+  text-align: right;
+  padding-right: 6px;
+  font-size: 11px;
+  color: var(--stamp-verified);
+}
+
+.manifest-col-status.incomplete {
+  color: var(--stamp-unverified);
+}
+
+.manifest-col-toggle {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  font-size: 13px;
+  user-select: none;
+}
+
+/* Inline Expanded Trace */
+.manifest-trace {
+  display: none;
+  padding: 14px 16px 18px 16px;
+  background-color: rgba(201, 194, 172, 0.12);
+  border-top: 1px dashed var(--rule-hairline);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.manifest-item.expanded .manifest-trace {
+  display: block;
+}
+
+.manifest-item.expanded .manifest-col-toggle {
+  transform: rotate(45deg);
+}
+
+.trace-summary {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  color: var(--ink-primary);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted var(--rule-hairline);
+}
+
+.trace-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.trace-query-block {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--rule-hairline);
+}
+
+.trace-query-cmd {
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin-bottom: 4px;
+}
+
+.trace-result-item {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dotted var(--rule-hairline);
+}
+
+.trace-result-title {
+  color: var(--ink-primary);
+  font-weight: 500;
+}
+
+.trace-result-title a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.trace-result-snippet {
+  color: var(--ink-muted);
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* Footer / Audit Sign-off */
+.doc-footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-hairline);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.doc-footer-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Accessible focus states */
+a:focus-visible, button:focus-visible, .manifest-item:focus-visible {
+  outline: 1.5px solid var(--ink-primary);
+  outline-offset: 2px;
+}
